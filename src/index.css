@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root, html.dark {
+  --color-base: #08080c;
+  --color-elevated: #0f0f14;
+  --color-panel: rgba(0,0,0,0.15);
+  --color-card: rgba(255,255,255,0.05);
+  --color-card-hover: rgba(255,255,255,0.10);
+  --color-text: #f0ede7;
+  --color-text-2: rgba(255,255,255,0.6);
+  --color-text-3: rgba(255,255,255,0.4);
+  --color-text-4: rgba(255,255,255,0.3);
+  --color-text-5: rgba(255,255,255,0.2);
+  --color-border: rgba(255,255,255,0.1);
+  --color-border-strong: rgba(255,255,255,0.15);
+  --color-border-faint: rgba(255,255,255,0.05);
+  --color-overlay: rgba(0,0,0,0.90);
+  --color-scrollbar: #2a2a35;
+}
+
+html.light {
+  --color-base: #f8f7f4;
+  --color-elevated: #ffffff;
+  --color-panel: #ffffff;
+  --color-card: #ffffff;
+  --color-card-hover: #f3f2ef;
+  --color-text: #0f0f0e;
+  --color-text-2: #2e2c29;
+  --color-text-3: #4a4845;
+  --color-text-4: #6b6966;
+  --color-text-5: #9c9a96;
+  --color-border: #e2e0dc;
+  --color-border-strong: #d0cec9;
+  --color-border-faint: #eceae6;
+  --color-overlay: rgba(0,0,0,0.35);
+  --color-scrollbar: #d0cec9;
+}
+
+* { box-sizing: border-box; }
+body {
+  font-family: 'Lexend Deca', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--color-base);
+  color: var(--color-text);
+  margin: 0;
+}
+::-webkit-scrollbar { width: 3px; height: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-scrollbar); border-radius: 2px; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* Decision question — the most important text on screen */
+.decision-question {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.4px;
+}
+
+/* KPI labels — readable, not faint */
+.kpi-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  opacity: 1 !important;
+}
+
+/* Section labels — not invisible */
+.section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Signal feed text */
+.signal-text { font-size: 12px; line-height: 1.5; }
+
+/* Nav items */
+.nav-label { font-size: 13px !important; }
+
+/* Task rows — slightly more room */
+.task-row-padding {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+/* ── LIGHT MODE GLOBAL OVERRIDES ── */
+/* White opacity backgrounds → solid light fills */
+html.light .bg-white\/3  { background-color: #ffffff !important; }
+html.light .bg-white\/5  { background-color: #ffffff !important; }
+html.light .bg-white\/8  { background-color: #fafaf8 !important; }
+html.light .bg-white\/10 { background-color: #f5f4f1 !important; }
+html.light .bg-white\/12 { background-color: #f3f2ef !important; }
+html.light .bg-white\/15 { background-color: #efeee9 !important; }
+html.light .bg-white\/20 { background-color: #eae9e4 !important; }
+
+/* White opacity borders → solid light borders */
+html.light .border-white\/5  { border-color: #eceae6 !important; }
+html.light .border-white\/8  { border-color: #e2e0dc !important; }
+html.light .border-white\/10 { border-color: #dad8d3 !important; }
+html.light .border-white\/12 { border-color: #d5d3ce !important; }
+html.light .border-white\/15 { border-color: #d0cec9 !important; }
+
+/* White opacity text → solid dark text */
+html.light .text-white        { color: #0f0f0e !important; }
+html.light .text-white\/20    { color: #9c9a96 !important; }
+html.light .text-white\/30    { color: #6b6966 !important; }
+html.light .text-white\/40    { color: #4a4845 !important; }
+html.light .text-white\/50    { color: #3a3836 !important; }
+html.light .text-white\/60    { color: #2e2c29 !important; }
+html.light .text-white\/70    { color: #1c1b19 !important; }
+
+/* Black opacity backgrounds → clean white/off-white */
+html.light .bg-black\/10 { background-color: #ffffff !important; }
+html.light .bg-black\/15 { background-color: #ffffff !important; }
+html.light .bg-black\/20 { background-color: #fafaf8 !important; }
+html.light .bg-black\/30 { background-color: #f5f4f1 !important; }
+
+/* Inputs and textareas */
+html.light input,
+html.light textarea {
+  background-color: #ffffff !important;
+  border-color: #e2e0dc !important;
+  color: #0f0f0e !important;
+}
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #9c9a96 !important;
+}
+html.light input:focus,
+html.light textarea:focus {
+  border-color: #3b82f6 !important;
+}
+
+/* Sidebar and panels — clean white with subtle border */
+html.light aside {
+  background-color: #ffffff !important;
+  border-color: #eceae6 !important;
+}
+
+/* Mono font color in light mode */
+html.light .mono { color: #2e2c29; }
+
+/* Light mode scrollbar */
+html.light ::-webkit-scrollbar-thumb {
+  background: #d0cec9;
+}
