@@ -20,8 +20,8 @@ export default function Sidebar() {
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-[11px] font-black text-white flex-shrink-0 shadow-lg shadow-blue-500/30">OS</div>
           <div>
-            <div className="text-xs font-bold text-txt truncate max-w-[130px]">{startup.name}</div>
-            <div className="text-[10px] text-txt-4 truncate">{startup.industry}</div>
+            <div className="text-sm font-bold text-txt truncate max-w-[130px]">{startup.name}</div>
+            <div className="text-[11px] text-txt-4 truncate">{startup.industry}</div>
           </div>
         </div>
       </div>
@@ -35,7 +35,7 @@ export default function Sidebar() {
                 ? 'bg-card-hover text-txt font-semibold'
                 : 'text-txt-3 hover:text-txt-2 hover:bg-card'}`}>
             <span className="text-base w-5 text-center">{item.icon}</span>
-            <span className="text-xs">{item.label}</span>
+            <span className="text-sm">{item.label}</span>
             {page === item.id && <div className="ml-auto w-1 h-4 rounded-full bg-blue-400" />}
           </button>
         ))}

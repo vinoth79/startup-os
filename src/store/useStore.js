@@ -159,6 +159,88 @@ const AGENT_OUTPUTS = {
   'ops-4': { agentId: 'validation', output: 'Channel Analysis:\nLinkedIn CAC: ₹420 (target ₹680 — 38% below)\nConversion: 3.2% of demos to paid\nLTV:CAC ratio: 6.8:1\n\nVerdict: LinkedIn is your scalable channel.\nRecommendation: 2× budget after churn < 5%.' },
 }
 
+/* ─── TASK ELIGIBLE ASSIGNEES ─── */
+export const TASK_ELIGIBLE_ASSIGNEES = {
+  // ── PRE-INCORPORATION ──
+  'pre-1': { humans: ['founder'], agents: [], locked: true, reason: 'Problem definition requires founder conviction. Cannot be delegated.' },
+  'pre-2': { humans: ['founder', 'cofounder', 'advisor'], agents: ['research'], locked: false, agentNote: 'Research Agent can suggest ICP based on market scan — founder must validate.' },
+  'pre-3': { humans: ['founder'], agents: [], locked: true, reason: 'Founder-market fit is a self-assessment. Only you can answer this.' },
+  'pre-4': { humans: ['founder', 'advisor'], agents: ['research'], locked: false, recommended: 'research', agentNote: 'Research Agent generates a bottom-up TAM model across 3 scenarios in under 3 minutes.' },
+  'pre-5': { humans: ['founder', 'cofounder'], agents: ['compliance'], locked: false, recommended: 'compliance', agentNote: 'Compliance Agent drafts the agreement template. Founder must sign.' },
+
+  // ── VALIDATION ──
+  'val-1': { humans: ['founder'], agents: [], locked: true, reason: 'Hypothesis must come from the founder. It defines the direction of the company.' },
+  'val-2': { humans: ['founder', 'cofounder'], agents: [], locked: false, humanNote: 'Customers open up differently with founders. Do not delegate to an agent or advisor.' },
+  'val-3': { humans: ['founder'], agents: ['validation'], locked: false, recommended: 'validation', agentNote: 'Validation Agent synthesises interview transcripts and calculates PMF score.' },
+  'val-4': { humans: ['founder', 'cofounder', 'advisor'], agents: ['cs', 'validation'], locked: false, humanNote: 'Founder calls have 3× retention rate. CS Agent can identify at-risk accounts.' },
+  'val-5': { humans: ['founder', 'cofounder'], agents: [], locked: false, humanNote: 'Pre-sells at this stage require founder credibility.' },
+  'val-6': { humans: ['founder'], agents: ['validation'], locked: false, recommended: 'validation', agentNote: 'Validation Agent runs the final PMF scorecard across all signals.' },
+
+  // ── INCORPORATION ──
+  'inc-1': { humans: ['founder', 'advisor', 'ca'], agents: ['compliance'], locked: false, humanNote: 'CA or legal advisor should validate the choice. Compliance Agent can brief you.' },
+  'inc-2': { humans: ['founder'], agents: ['compliance'], locked: false, recommended: 'compliance', agentNote: 'Compliance Agent runs MCA + trademark search and prepares 3 name options.' },
+  'inc-3': { humans: ['founder', 'cofounder'], agents: [], locked: false, humanNote: 'Requires physical presence. Cannot be done by an agent.' },
+  'inc-4': { humans: ['founder', 'ca'], agents: ['compliance'], locked: false, recommended: 'compliance', agentNote: 'Compliance Agent handles all 8 fields of SPICe+ Part B filing.' },
+  'inc-5': { humans: ['founder', 'cofounder'], agents: [], locked: false, humanNote: 'Requires founder presence at the bank. Agent cannot substitute.' },
+  'inc-6': { humans: ['founder', 'ca'], agents: ['compliance'], locked: false, recommended: 'compliance', agentNote: 'Compliance Agent files INC-20A and sets 30-day reminder.' },
+
+  // ── SETUP ──
+  'setup-1': { humans: ['founder', 'ca', 'advisor'], agents: ['finance'], locked: false, recommended: 'finance', agentNote: 'Finance Agent configures chart of accounts and connects bank feed.' },
+  'setup-2': { humans: ['founder', 'ca'], agents: ['compliance'], locked: false, recommended: 'compliance', agentNote: 'Compliance Agent submits GST application and tracks approval.' },
+  'setup-3': { humans: ['founder', 'ca'], agents: ['compliance'], locked: false, recommended: 'compliance', agentNote: 'Compliance Agent files in Classes 9, 35, 42 for SaaS.' },
+  'setup-4': { humans: ['founder', 'cofounder', 'ca', 'advisor'], agents: ['compliance'], locked: false, agentNote: 'Compliance Agent generates agreement templates with IP assignment clause.' },
+
+  // ── EARLY OPERATIONS ──
+  'ops-1': { humans: ['founder'], agents: [], locked: true, reason: 'First 10 customers must be founder-closed. These conversations define your product.' },
+  'ops-2': { humans: ['founder', 'cofounder'], agents: [], locked: true, reason: 'The playbook must be written by whoever closed the deals. That is you.' },
+  'ops-3': { humans: ['founder', 'cofounder', 'advisor'], agents: ['cs'], locked: false, humanNote: 'Founder calls have 3× retention rate. CS Agent identifies root cause.' },
+  'ops-4': { humans: ['founder', 'cofounder'], agents: ['validation'], locked: false, recommended: 'validation', agentNote: 'Validation Agent analyses channel CAC:LTV and recommends the scalable one.' },
+
+  // ── GROWTH ──
+  'growth-1': { humans: ['founder', 'advisor', 'ca'], agents: ['finance', 'compliance'], locked: false, recommended: 'finance', agentNote: 'Finance Agent assembles data room: cohort retention, unit economics, cap table.' },
+  'growth-2': { humans: ['founder'], agents: [], locked: true, reason: 'Fundraising is a founder relationship. Investors back people, not agents.' },
+  'growth-3': { humans: ['founder', 'cofounder'], agents: [], locked: true, reason: 'Leadership hiring defines company culture. Founder must own these decisions.' },
+
+  // ── EXIT ──
+  'exit-1': { humans: ['founder', 'advisor', 'ca'], agents: ['compliance', 'finance'], locked: false, humanNote: 'M&A advisor should lead this. Compliance and Finance Agents prepare documentation.' },
+  'exit-2': { humans: ['founder', 'advisor'], agents: [], locked: true, reason: 'LOI negotiation requires founder authority. Advisors can support but not substitute.' },
+}
+
+// Infer a role ID from a free-text role string
+function inferRoleId(role) {
+  if (!role) return 'human'
+  const r = role.toLowerCase()
+  if (r.includes('co-found') || r.includes('cofounder')) return 'cofounder'
+  if (r.includes('advisor') || r.includes('mentor')) return 'advisor'
+  if (r.includes('ca') || r.includes('chartered') || r.includes('legal') || r.includes('lawyer')) return 'ca'
+  if (r.includes('cto') || r.includes('engineer') || r.includes('tech')) return 'engineer'
+  if (r.includes('design')) return 'designer'
+  if (r.includes('sales') || r.includes('growth') || r.includes('marketing')) return 'sales'
+  return 'human'
+}
+
+export function getEligibleAssignees(taskId, companyTeam = [], companyAgents = []) {
+  const rule = TASK_ELIGIBLE_ASSIGNEES[taskId]
+  if (!rule) {
+    return { humans: companyTeam, agents: companyAgents, locked: false, recommended: null, reason: null, humanNote: null, agentNote: null }
+  }
+  const eligibleHumans = companyTeam.filter(member => {
+    if (member.isFounder) return rule.humans.includes('founder')
+    const roleId = member.roleId || inferRoleId(member.role)
+    return rule.humans.includes(roleId) || rule.humans.includes(member.type?.toLowerCase())
+  })
+  const eligibleAgents = companyAgents.filter(agent => rule.agents.includes(agent.id))
+  return {
+    humans: eligibleHumans,
+    agents: eligibleAgents,
+    locked: rule.locked || false,
+    recommended: rule.recommended || null,
+    reason: rule.reason || null,
+    humanNote: rule.humanNote || null,
+    agentNote: rule.agentNote || null,
+  }
+}
+
 /* ─── HISTORY ENTRIES ─── */
 const INITIAL_HISTORY = []
 
@@ -245,6 +327,22 @@ export const useStore = create((set, get) => ({
   addHistory: (entry) => set(s => ({
     history: [{ id: Date.now(), ...entry, time: 'Just now' }, ...s.history],
   })),
+
+  /* ── Task: reassign ── */
+  reassignTask: (stageId, taskId, newOwner, ownerType) => {
+    // ownerType: 'Founder' or 'Agent'
+    set(s => ({
+      stages: s.stages.map(st =>
+        st.id !== stageId ? st : {
+          ...st,
+          tasks: st.tasks.map(t =>
+            t.id !== taskId ? t : { ...t, owner: ownerType, assignedTo: newOwner }
+          ),
+        }
+      ),
+    }))
+    get().addSignal(`📋 "${get().stages.find(s => s.id === stageId)?.tasks.find(t => t.id === taskId)?.title}" reassigned to ${newOwner}`, 'task', 0)
+  },
 
   /* ── Task: complete ── */
   completeTask: (stageId, taskId) => {
