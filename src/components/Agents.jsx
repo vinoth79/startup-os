@@ -1,5 +1,6 @@
 import React from 'react'
 import { useStore } from '../store/useStore'
+import ComplianceCalendar from './ComplianceCalendar'
 
 export default function Agents() {
   const { agents, triggerAgent, resetAgent } = useStore()
@@ -30,6 +31,9 @@ export default function Agents() {
           {completed > 0 && <span className="px-3 py-1.5 bg-green-500/10 text-green-400 border border-green-500/20 rounded-xl text-xs font-bold">{completed} completed</span>}
         </div>
       </div>
+
+      {/* Compliance Calendar — Ops Agent primary feature */}
+      <ComplianceCalendar />
 
       {/* Flow diagram */}
       <div className="p-4 rounded-2xl bg-card border border-line">

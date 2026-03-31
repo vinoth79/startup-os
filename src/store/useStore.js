@@ -307,6 +307,7 @@ export const useStore = create((set, get) => ({
       startup: data,
       onboarded: true,
       signals: [
+        { id: Date.now() + 4, type: 'agent', text: `⚙️ Ops Agent ready — generate your 12-month compliance calendar on the Agents page`, time: 'Just now', impact: 3 },
         { id: Date.now() + 3, type: 'task', text: `📋 Next action: Write your problem statement — one sentence, no solution language`, time: 'Just now', impact: 0 },
         { id: Date.now() + 2, type: 'system', text: `Stage 01: Pre-Incorporation is now active. Complete all tasks to unlock Validation.`, time: 'Just now', impact: 0 },
         { id: Date.now() + 1, type: 'milestone', text: `🚀 ${data.name} initialized — ${data.industry} startup, ${founderLabel} founder`, time: 'Just now', impact: 5 },
